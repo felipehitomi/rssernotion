@@ -1,18 +1,17 @@
 import feedparser
 from html.parser import HTMLParser
 from notion.client import NotionClient
-from notion.block import TextBlock
-
+from notion.block import TextBlock, SubheaderBlock, BulletedListBlock
 import html2text
 
-client = NotionClient(token_v2="f4678525ad72d98f7c312e90e11d22d94be41a812bc1a4922b03dc14307bde3d6fce405dba23e719469c4136885dbb41b6b1aa810e2d02bffc9263dc1d2b4cbc6527b5951af2d17c2b79d493ac4d")
-page = client.get_block("https://www.notion.so/DevOps-RSS-89c60de0b68f4fda91bd13a756e08a1f")
+notiontoken = ""
+notionpage = ""
+client = NotionClient(token_v2=notiontoken)
+page = client.get_block(notionpage)
 
 class MyHTMLParser(HTMLParser):
     def handle_data(self, data):
         print(data)
-
-
 
 def rssparser(url):
     parser = MyHTMLParser()
@@ -29,10 +28,10 @@ def link_finder(file):
         rssparser(param)
 
 def write_notion(title,link,text):
-    page.children.add_new(TextBlock, title=title)
-    page.children.add_new(TextBlock, title=link)
+    page.children.add_new(SubheaderBlock, title=title)
+    page.children.add_new(BulletedListBlock, title=link)
     page.children.add_new(TextBlock, title=text)
-
+    page.children.add_new(TextBlock, title="")
 
 if __name__ == "__main__":
     link_finder("links.txt")
