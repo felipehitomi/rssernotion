@@ -10,7 +10,7 @@ pip install -r requirements.txt
 
 ## Usage
 
-Put the links you
+Put the links you want on the links.txt
 
 ## Todo
 
